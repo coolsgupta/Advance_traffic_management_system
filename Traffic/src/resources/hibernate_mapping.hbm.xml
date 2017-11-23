@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping>
+	<class name="com.shobhit.Citizen" table="citizens">
+	
+		<id name="id">
+			<generator class="assigned"></generator>
+		</id>
+		<property name="name" column="name" type="string"></property>
+		<property name="fname" column="fname" type="string"></property>
+		<property name="address" column="address" type="string"></property>
+		<property name="status" column="status" type="string"></property>
+		<property name="challans" column="challans" type="int"></property>
+		<property name="balance" column="balance" type="float"></property>
+		
+	
+	</class>
+
+</hibernate-mapping>

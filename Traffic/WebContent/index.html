@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Traffic Management System</title>
+	
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+	<!-- Angular Script-->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
+	
+	
+
+	<!--Font Awesome CDS -->
+	<script src="https://use.fontawesome.com/d68c434173.js"></script>
+
+	<style type="text/css">
+		.row{
+			padding: 10px;
+		}
+		.jumbotron{
+			height:100vh;
+			background-image: url("traffic.png");
+			background-repeat: no-repeat;
+			background-size:cover;
+			background-color:black;
+		}
+		
+		input.ng-invalid {
+    background-color:pink;
+}
+input.ng-valid {
+    background-color:lightgreen;
+}
+	</style>
+	
+	
+	</head>
+	
+<body ng-app="myApp" ng-controller="myCtrl" ng-init="initial()">
+
+
+<div class="jumbotron">
+<p style="padding:15px;"></p>
+<div class="row">
+	<p class="col-sm-3"></p>
+	<h1  class ="col-sm-9" style="color:white;">Advanced Traffic Management System</h1>
+	</div>
+<p style="padding: 200px;"></p>	
+	<div class="row">
+	<p class="col-sm-2"></p>
+	<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary col-sm-3" data-toggle="modal" data-target="#newCitizenModal">
+  Create new Citizen
+</button>
+<p class="col-sm-2"></p>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-danger col-sm-3" data-toggle="modal" data-target="#getCitizen">
+  Get Citizen Details
+</button>
+</div>
+
+
+</div> <!-- end of jumbotron -->
+<!-- Modal for getting citizen details-->
+<div class="modal fade" id="getCitizen" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Find Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>	
+      <div class="modal-body">
+        <form>
+        	<input type="text" ng-model="plateNo" placeholder="Enter Plate number" required>
+        	<button type="button" class="btn btn-warning" ng-click="getNo()">Get Plate No.</button>
+     		<h4>&nbsp;</h4>
+        	
+        	<!-- Button for toll/challans -->
+        	<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#tollModal">Toll/Challan</button>
+        	
+        	 <!-- <p>{{plateNo}}</p> -->
+        	 <p style="padding:7px;"></p>
+        	 <table ng-repeat="x in myVal" class="table-striped">
+        	<tr>
+        		<th>License Number</th>
+        		<td>{{x.id}}</td>
+        	</tr>
+        	<tr>
+        		<th>Name</th>
+        		<td>{{x.name}}</td>
+        	</tr>
+        	<tr>
+        		<th>Father's Name</th>
+        		<td>{{x.fname}}</td>
+        	</tr>
+        	<tr>
+        		<th>Address</th>
+        		<td>{{x.address}}</td>
+        	</tr>
+        	<tr>
+        		<th>Balance</th>
+        		<td>{{x.balance}}</td>
+        	</tr>
+        	<tr>
+        		<th>No of Challans</th>
+        		<td>{{x.challans}}</td>
+        	</tr>
+        	<tr>
+        		<th>Status</th>
+        		<td>{{x.status}}</td>
+        	</tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary"  ng-click="getCitizen()">Get Details</button>
+        </form>
+        
+        
+        
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for new Citizen-->
+<div class="modal fade" id="newCitizenModal" tabindex="-1" role="dialog" aria-labelledby="citizenForm" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="citizenForm">New Citizen</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <form action="http://localhost:8080/Traffic/rest/app/newUser" method="POST">
+      		<!--  Number plate no -->
+      		<div class="row">
+      			<div class = "col">
+      				<input type="text" name="id" class="form-control" placeholder="Number plate number" required>
+      			</div>
+      		</div>
+      		<!-- Name -->
+      		<div class="row">
+      			<div class = "col">
+      				<input type="text" name="name" class="form-control" placeholder="Name" required>
+      			</div>
+      		</div>
+      		<!-- Father name-->
+      		<div class="row">
+      			<div class = "col">
+      				<input type="text" name="fname" class="form-control" placeholder="Father's Name" required>
+      			</div>
+      		</div>
+
+      		<!-- Address-->
+      		<div class="row">
+      			<div class = "col">
+      				<input type="text" name="address" class="form-control" placeholder="Address" required>
+      			</div>
+      		</div>
+
+      		<!-- Balance-->
+      		<div class="row">
+      			<div class = "col">
+      				<input type="number" name="balance" step="0.01" class="form-control" placeholder="Balance" required>
+      			</div>
+      		</div>
+
+      		<!--Challans-->
+      		<div class="row">
+      			<div class = "col">
+      				<input type="number" name="challans" class="form-control" placeholder="Challans" required>
+      			</div>
+      		</div>
+
+      		<!-- Status-->
+      		<div class="row">
+      			<div class = "col">
+      				<input type="radio" name="status" value="allowed" required checked>Allowed
+      				<input type="radio" name="status" value="denied" required>Denied
+      			</div>
+      		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for Tolls/Challans -->
+<!-- Modal -->
+<div class="modal fade" id="tollModal" tabindex="-1" role="dialog" aria-labelledby="tollModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="tollModalLabel">Toll/Challan</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form name="tollForm" action="http://localhost:8080/Traffic/rest/app/tollChallan" method="POST">
+        	<div class ="row">
+        		<input type="text" ng-model="plateNo" class="col" placeholder="PlateNo" name="plateNo">
+        	</div>
+        	
+        	<div class ="row">
+        		<h6 class="col-sm-2"> Balance: </h6><h6 class="col-sm-3" ng-bind="currentBalance"></h6>
+        	</div>
+        	<div class ="row">
+        		<input type="number" class="col-sm-3" placeholder="Amount" name="amount" ng-model="tollAmount" required="tollAmount">
+        		
+        	</div>
+        	<div class ="row">
+        		<div class="col">
+        		<input type="radio" name="type" value="toll" checked>Toll
+        		<input type="radio" name="type" value="challan">Challan
+        		</div>
+        	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" ng-disabled="!tollForm.amount.$valid">Charge</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--  Angular Script -->
+<script>
+	var app=angular.module("myApp",[]);
+	app.controller("myCtrl",function($scope,$http,$window){
+		$scope.initial= function()
+		{
+			$scope.plateNo = "";
+			$scope.tollAmount=0;
+			 
+		
+		}
+		
+		$scope.getCitizen= function()
+		{
+			console.log("inside getCitizen()");
+			$http.get('http://localhost:8080/Traffic/rest/app/getUser/'+$scope.plateNo)
+		      .then(function(response){
+		        $scope.myVal=response.data;
+		        
+		        $scope.currentBalance=response.data[0].balance;
+		        
+		        
+		      });
+		}
+		
+		$scope.getNo = function()
+		{
+			console.log("inside getNo");
+			$http.get('http://localhost:8080/Traffic/rest/app/getPlate')
+		      .then(function(response){
+		        $scope.plateNo=(response.data).value;
+		        
+		      });
+		}
+		
+	});
+</script>
+
+<!-- Bootstrap Scripts-->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+</body>
+
+</html>
